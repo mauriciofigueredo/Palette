@@ -12,11 +12,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.palette.components.ColorCard
 import org.jetbrains.compose.resources.painterResource
 import palette.composeapp.generated.resources.Res
 import palette.composeapp.generated.resources.palette
@@ -56,5 +56,14 @@ fun HomeView() {
 @Composable
 fun ContentHomeView(modifier: Modifier){
 
-    Column() {  }
+    Column(modifier) {
+        ColorCard(
+            hex="#F5733",
+            rgb = "234, 234, 456",
+            onEdit = {},
+            onCopy = {},
+            onDelete = {},
+            modifier = Modifier.padding(16.dp)
+        )
+    }
 }
