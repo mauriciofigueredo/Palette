@@ -12,9 +12,21 @@ androidx-testExt = "1.3.0"
 composeHotReload = "1.0.0"
 composeMultiplatform = "1.10.3"
 junit = "4.13.2"
-kotlin = "2.3.20"
+kotlin = "2.2.10"
 kotlinx-coroutines = "1.10.2"
 material3 = "1.10.0-alpha05"
+#Koin DI
+koin = "4.1.0"
+#Room
+room = "2.7.2"
+sqlite = "2.5.2"
+ksp = "2.2.10-2.0.2"
+#navigation
+navigation = "2.9.0-rc01"
+serialization = "1.9.0"
+
+
+
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -37,6 +49,42 @@ compose-uiToolingPreview = { module = "org.jetbrains.compose.ui:ui-tooling-previ
 kotlinx-coroutinesSwing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 compose-material-icons-extended = {module="org.jetbrains.compose.material:material-icons-extended", version="1.7.3"}
 
+#koin
+#koin-android = {module="io.insert-koin:koin-android", version.ref="koin"}
+#koin-androidx-compose = {module="io.insert-koin:koin-androidx-compose", version.ref="koin"}
+#koin-core = {module="io.insert-koin:koin-core", version.ref="koin"}
+#koin-compose = {module="io.insert-koin:koin-compose", version.ref="koin"}
+#koin-android-viewmodel = {module="io.insert-koin:koin-android-viewmodel", version.ref="koin"}
+
+koin-android = { module = "io.insert-koin:koin-android", version.ref="koin" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref="koin" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref="koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref="koin" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref="koin" }
+
+
+
+#room
+#room-runtime={module="androidx.room:room-runtime", version.ref="room"}
+#room-compiler={module="androidx.room:room-compiler", version.ref="room"}
+#sqlite-bundled={module="androidx.sqlite:sqlite-bundled", version.ref="sqlite"}
+
+room-runtime = { module = "androidx.room:room-runtime", version.ref="room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref="room" }
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref="sqlite" }
+
+
+
+#navigation
+#androidx-navigation-compose = {module="org.jetbrains.androidx.navigation:navigation-compose", version.ref="navigation"}
+#kotlinx-serialization = {module="org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref="serialization"}
+
+androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref="navigation" }
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref="serialization" }
+
+
+
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -44,3 +92,9 @@ composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "com
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+room = { id = "androidx.room", version.ref="room" }
+ksp = { id = "com.google.devtools.ksp", version.ref="ksp" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref="kotlin" }
+
+
+

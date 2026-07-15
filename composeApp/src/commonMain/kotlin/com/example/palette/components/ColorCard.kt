@@ -77,7 +77,7 @@ fun ColorCard(
                 IconButton(onCopy){
                     Icon(imageVector = Icons.Default.FileCopy, contentDescription = "Copy" )
                 }
-                IconButton(onEdit){
+                IconButton(onDelete){
                     Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete" )
                 }
             }
