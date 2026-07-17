@@ -27,7 +27,6 @@ class PaletteRepository(private val database: RoomDB) {
 
 
     fun getAllPalettes(): Flow<List<PaletteModel>?>{
-
         return database.paletteDao().getAllPalettes()
     }
 }
