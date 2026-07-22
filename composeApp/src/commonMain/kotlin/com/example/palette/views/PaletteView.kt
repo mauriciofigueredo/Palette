@@ -47,6 +47,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.palette.components.ColorCard
 import com.example.palette.components.SliderMain
 import com.example.palette.copyToClipboard
@@ -57,27 +58,32 @@ import palette.composeapp.generated.resources.palette
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PaletteView(modifier : Modifier, viewModel : ColorViewModel = viewModel { ColorViewModel() }) {
+fun PaletteView(
+    navController: NavController,
+    id: Int,
+    name:String,
+    modifier : Modifier,
+    viewModel : ColorViewModel = viewModel { ColorViewModel() }) {
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text("Name")
+                    Text(name)
                 },
                 actions = {
-                    IconButton(onClick = {viewModel.copyAll()}){
+                    IconButton(onClick = {}){
                         Icon(Icons.Default.CopyAll, contentDescription = "CopyAll")
                     }
-                    IconButton(onClick = {viewModel.reset()}){
+                    IconButton(onClick = {}){
                         Icon(Icons.Default.Delete, contentDescription = "Delete")
                     }
-                    IconButton(onClick = {viewModel.reset()}){
+                    IconButton(onClick = {}){
                         Icon(Icons.Default.Palette, contentDescription = "Palette")
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = {viewModel.reset()}){
+                    IconButton(onClick = {navController.popBackStack()}){
                         Icon(Icons.Default.ArrowCircleLeft, contentDescription = "Back")
                     }
                 }
@@ -85,7 +91,7 @@ fun PaletteView(modifier : Modifier, viewModel : ColorViewModel = viewModel { Co
 
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.generateColor()},
+            FloatingActionButton(onClick = { },
                 containerColor = Color.DarkGray,
                 contentColor = Color.White
             ){
@@ -131,7 +137,7 @@ fun ContentPaletteView(modifier: Modifier, viewModel: ColorViewModel ){
                     copyToClipboard(color.hex)
                 },
                 onDelete = {
-                    viewModel.deleteColor(color.id)
+
                 },
                 modifier = Modifier.padding(16.dp)
             )
@@ -184,7 +190,7 @@ fun ContentPaletteView(modifier: Modifier, viewModel: ColorViewModel ){
                 Spacer(modifier = Modifier.height(20.dp))
 
                 OutlinedButton(onClick = {
-                    viewModel.editColor(id,red.toInt(),green.toInt(),blue.toInt())
+                    //viewModel.editColor(id,red.toInt(),green.toInt(),blue.toInt())
                     showModal = false
                 }){
                     Text("Change Color", fontWeight = FontWeight.Bold)

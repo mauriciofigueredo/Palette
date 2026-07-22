@@ -2,6 +2,7 @@ package com.example.palette.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -35,8 +36,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.palette.components.IconTitle
 import com.example.palette.components.ModalPalette
+import com.example.palette.model.PaletteModel
+import com.example.palette.navigation.Palette
 import com.example.palette.viewModels.PaletteViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -45,7 +49,7 @@ import palette.composeapp.generated.resources.palette
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeView(modifier : Modifier) {
+fun HomeView(modifier : Modifier, navController: NavController) {
     val viewModel = koinViewModel<PaletteViewModel>()
     var showModal by remember { mutableStateOf(false) }
     Scaffold(
@@ -66,18 +70,18 @@ fun HomeView(modifier : Modifier) {
                     }
                 },
                 navigationIcon = {
-
+                    //navController.navigate(Palette)
                 }
             )
 
         }
     ) {
         padding ->
-        ContentHomeView(modifier = Modifier.padding(padding))
+        ContentHomeView(navController, modifier = Modifier.padding(padding))
         if(showModal){
             ModalPalette(
                 palette = null,
-                onDismiss = {},
+                onDismiss = { showModal = false },
                 onSave = {
                     viewModel.insertPalette(it)
                 }
@@ -88,11 +92,12 @@ fun HomeView(modifier : Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContentHomeView(modifier: Modifier) {
+fun ContentHomeView(navController: NavController, modifier: Modifier) {
     val viewModel = koinViewModel<PaletteViewModel>()
     val palettes by viewModel.getPalette().collectAsState(null)
     var showModal by remember { mutableStateOf(false) }
 
+    var selectedPalette by remember { mutableStateOf<PaletteModel?>(null)}
 
     var expanded by remember { mutableStateOf<Int?>(null) }
     LazyColumn(modifier) {
@@ -115,7 +120,11 @@ fun ContentHomeView(modifier: Modifier) {
                         ){
                             DropdownMenuItem(
                                 text = { IconTitle("Edit", Icons.Default.Edit) },
-                                onClick = { expanded = null}
+                                onClick = {
+                                    expanded = null
+                                    selectedPalette = item
+                                    showModal = true
+                                }
                             )
                             HorizontalDivider()
                             DropdownMenuItem(
@@ -129,9 +138,21 @@ fun ContentHomeView(modifier: Modifier) {
                     IconButton(onClick = {}){
                         Icon(Icons.Default.ArrowCircleRight, contentDescription = "next")
                     }
+                },
+                modifier = Modifier.clickable{
+                    navController.navigate(Palette(item.id, item.name))
                 }
             )
         }
+    }
+    if(showModal){
+        ModalPalette(
+            palette = selectedPalette,
+            onDismiss = {},
+            onSave = {
+                viewModel.updatePalette(it)
+            }
+        )
     }
 
 }

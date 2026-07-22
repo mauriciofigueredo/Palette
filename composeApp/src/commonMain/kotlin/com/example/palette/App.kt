@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.palette.navigation.NavMannager
 import com.example.palette.views.CheckDB
 import com.example.palette.views.HomeView
 
@@ -17,7 +18,7 @@ fun App() {
     MaterialTheme(colorScheme = lightColorScheme(
         background = Color.LightGray
     )) {
-        HomeView(modifier = Modifier)
+        NavMannager( )
 
     }
 }

@@ -55,7 +55,7 @@ fun ModalPalette(
             )
             Spacer(modifier = Modifier.height(20.dp))
             Button(onClick = {
-                onSave(PaletteModel(id = palette?.id ?: 0, name, desc))
+                onSave(PaletteModel(id = palette?.id ?: 0, name = name, desc = desc))
                 onDismiss()
             },
                 colors = ButtonDefaults.buttonColors(
@@ -66,8 +66,6 @@ fun ModalPalette(
                 Text(if(palette != null)"Update" else "Save")
             }
             Spacer(modifier = Modifier.height(30.dp))
-
-
 
         }
     }
