@@ -12,6 +12,7 @@ import com.example.palette.usesCases.colors.UpdateColorUseCase
 import com.example.palette.usesCases.palette.GetPaletteUseCase
 import com.example.palette.usesCases.palette.InsertPaletteUseCase
 import com.example.palette.usesCases.palette.UpdatePaletteuseCase
+import com.example.palette.viewModels.ColorViewModel
 import com.example.palette.viewModels.PaletteViewModel
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -43,4 +44,5 @@ val sharedModule = module {
 
     //viewModel
     viewModelOf(::PaletteViewModel)
+    viewModelOf(::ColorViewModel)
 }

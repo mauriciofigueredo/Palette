@@ -53,6 +53,7 @@ import com.example.palette.components.SliderMain
 import com.example.palette.copyToClipboard
 import com.example.palette.viewModels.ColorViewModel
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.viewmodel.koinViewModel
 import palette.composeapp.generated.resources.Res
 import palette.composeapp.generated.resources.palette
 
@@ -63,8 +64,8 @@ fun PaletteView(
     id: Int,
     name:String,
     modifier : Modifier,
-    viewModel : ColorViewModel = viewModel { ColorViewModel() }) {
-
+    ) {
+    val viewModel = koinViewModel<ColorViewModel>()
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -91,7 +92,7 @@ fun PaletteView(
 
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { },
+            FloatingActionButton(onClick = { viewModel.inertColor(id)},
                 containerColor = Color.DarkGray,
                 contentColor = Color.White
             ){
@@ -100,16 +101,16 @@ fun PaletteView(
         }
     ) {
             padding ->
-        ContentPaletteView(modifier = Modifier.padding(padding), viewModel)
+        ContentPaletteView(modifier = Modifier.padding(padding), id)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContentPaletteView(modifier: Modifier, viewModel: ColorViewModel ){
+fun ContentPaletteView(modifier: Modifier, id: Int ){
 
-    val colors by viewModel.colors.collectAsState()
-
+    val viewModel = koinViewModel<ColorViewModel>()
+    val colors by viewModel.getColor(id).collectAsState(null)
     val modalState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
@@ -122,7 +123,7 @@ fun ContentPaletteView(modifier: Modifier, viewModel: ColorViewModel ){
     var id by remember {mutableStateOf(0)}
 
     LazyColumn(modifier){
-        items(colors){color ->
+        items(colors.orEmpty()){color ->
             ColorCard(
                 hex=color.hex,
                 rgb = color.rgb,
@@ -137,7 +138,7 @@ fun ContentPaletteView(modifier: Modifier, viewModel: ColorViewModel ){
                     copyToClipboard(color.hex)
                 },
                 onDelete = {
-
+                    viewModel.deleteColor(color)
                 },
                 modifier = Modifier.padding(16.dp)
             )

@@ -1,19 +1,59 @@
 package com.example.palette.viewModels
 
+import androidx.compose.material3.MenuItemColors
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.palette.copyToClipboard
 import com.example.palette.model.ColorModel
+import com.example.palette.usesCases.colors.DeleteColorUseCase
+import com.example.palette.usesCases.colors.DeletePaletteUseCase
+import com.example.palette.usesCases.colors.GetColorsUseCase
+import com.example.palette.usesCases.colors.InsertColorUseCase
+import com.example.palette.usesCases.colors.UpdateColorUseCase
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import java.io.File.separator
 import kotlin.random.Random
 
-class ColorViewModel: ViewModel() {
+class ColorViewModel(
+    private val insertColorUseCase: InsertColorUseCase,
+    private val getColorsUseCase: GetColorsUseCase,
+    private val updateColorUseCase: UpdateColorUseCase,
+    private val deleteColorUseCase: DeleteColorUseCase,
+    private val deletePaletteUseCase: DeletePaletteUseCase
+): ViewModel() {
 
     private val _colors = MutableStateFlow<List<ColorModel>>(emptyList())
-    val colors : StateFlow<List<ColorModel>> = _colors
+    val colors: StateFlow<List<ColorModel>> = _colors
 
 
+    fun inertColor(idPalette: Int) {
+        viewModelScope.launch { insertColorUseCase(idPalette) }
+    }
+
+    fun getColor(idPalette: Int): Flow<List<ColorModel>?> {
+        return getColorsUseCase(idPalette)
+    }
+
+    fun editColor(colorItem: ColorModel, r: Int, g: Int, b: Int) {
+        viewModelScope.launch { updateColorUseCase(colorItem, r, g, b) }
+    }
+
+
+    fun deleteColor(colorItem: ColorModel) {
+        viewModelScope.launch { deleteColorUseCase(colorItem) }
+    }
+
+    fun deletePaletteById(idPalette: Int) {
+        viewModelScope.launch {
+            deletePaletteUseCase(idPalette)
+        }
+
+    }
+
+}
 
 
 
@@ -62,4 +102,3 @@ class ColorViewModel: ViewModel() {
 //        copyToClipboard(hexString)
 //    }
 
-}
